@@ -1,0 +1,255 @@
+﻿<Window x:Class="MusicPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicPlayer"
+        mc:Ignorable="d"
+        Title="MusicPlayer" Height="450" Width="800">
+    <x:Code>
+        <![CDATA[ public MainWindow() { InitializeComponent(); }]]>
+    </x:Code>
+    <Window.DataContext>
+        <local:MainWindow_ViewModel/>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding NewButtonCommand}" Modifiers="Ctrl" Key="N"/>
+        <KeyBinding Command="{Binding OpenButtonCommand}" Modifiers="Ctrl" Key="O"/>
+        <KeyBinding Command="{Binding SaveButtonCommand}" Modifiers="Ctrl" Key="S"/>
+        <KeyBinding Command="{Binding SaveAsButtonCommand}" Modifiers="Ctrl+Shift" Key="S"/>
+        <KeyBinding Command="{Binding ExitButtonCommand}" Modifiers="Alt" Key="F4"/>
+        <KeyBinding Command="{Binding RemoveButtonCommand}" Modifiers="" Key="Delete"/>
+        <KeyBinding Command="{Binding PlayButtonCommand}" Modifiers="" Key="Space"/>
+        <KeyBinding Command="{Binding PauseButtonCommand}" Modifiers="" Key="Space"/>
+        <KeyBinding Command="{Binding RepeatButtonCommand}" Modifiers="Ctrl" Key="R"/>
+        <KeyBinding Command="{Binding AddButtonCommand}" Modifiers="Ctrl" Key="A"/>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="2">
+            <Menu Height="25">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Новый" Command="{Binding NewButtonCommand}" InputGestureText="Ctrl + N" ToolTip="Создать новый плейлист.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/New.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Открыть" Command="{Binding OpenButtonCommand}" InputGestureText="Ctrl + O" ToolTip="Открыть файл плейлиста.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Open.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Сохранить" Command="{Binding SaveButtonCommand}" InputGestureText="Ctrl + S" ToolTip="Сохранить изменения в текущем плейлисте.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Save.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Сохранить как..." Command="{Binding SaveAsButtonCommand}" InputGestureText="Ctrl + Shift + S" ToolTip="Сохранить изменения в текущем плейлисте в новом файле.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/SaveAs.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Выйти" Command="{Binding ExitButtonCommand}" InputGestureText="Alt + F4" ToolTip="Выйти из приложения.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Exit.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Трек">
+                    <MenuItem Header="Воспроизвести" Command="{Binding PlayButtonCommand}" InputGestureText="Space" ToolTip="Проиграть выбранный трек.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Play.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Пауза" Command="{Binding PauseButtonCommand}" InputGestureText="Space" ToolTip="Пауза выбранного трека.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Pause.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Предыдущий" Command="{Binding PreviousButtonCommand}" ToolTip="Проиграть предыдущий трек в плейлисте.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Previous.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Следующий" Command="{Binding NextButtonCommand}" ToolTip="Проиграть следующий трек в плейлисте.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Next.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Повторять" Command="{Binding RepeatButtonCommand}" InputGestureText="Ctrl + R" ToolTip="Повторять текущий проигрываемый трек.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Repeat.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Плейлист">
+                    <MenuItem Header="Добавить..." Command="{Binding AddButtonCommand}" InputGestureText="Ctrl + A" ToolTip="Добавить трек в текущий плейлист.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Add.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Удалить" Command="{Binding RemoveButtonCommand}" InputGestureText="Delete" ToolTip="Удалить трек из текущего плейлиста.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Remove.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="С начала" Command="{Binding PlayFromStartButtonCommand}" ToolTip="Проиграть текущий плейлист с начала.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/FromStart.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Перемешать" Command="{Binding MixButtonCommand}" ToolTip="Перемешать текущий плейлист и проиграть с начала.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Mix.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Найти..." Command="{Binding FindButtonCommand}" InputGestureText="Ctrl + F" ToolTip="Найти трек в текущем плейлисте.">
+                        <MenuItem.Icon>
+                            <Image Source="/Resources/Images/Find.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="2" LastChildFill="True">
+            <ScrollViewer HorizontalAlignment="Left" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Width="250">
+                <ListBox ItemsSource="{Binding Tracks}" SelectedItem="{Binding SelectedTrack}" DisplayMemberPath="DisplayName">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Удалить" Command="{Binding RemoveButtonCommand}" InputGestureText="Delete" ToolTip="Удалить трек из текущего плейлиста.">
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/Images/Remove.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Открыть папку с треком" Command="{Binding OpenTrackFolderButtonCommand}" ToolTip="Открыть директорию, содержащую выбранный трек.">
+                                <MenuItem.Icon>
+                                    <Image Source="/Resources/Images/Open.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDoubleClick">
+                            <b:InvokeCommandAction Command="{Binding ListBoxDoubleClickCommand}" PassEventArgsToCommand="False"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </ListBox>
+            </ScrollViewer>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Название: {0}">
+                            <MultiBinding.Bindings>
+                                <Binding Path="TrackName"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Исполнитель: {0}">
+                            <MultiBinding.Bindings>
+                                <Binding Path="TrackAuthor"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Альбом: {0}">
+                            <MultiBinding.Bindings>
+                                <Binding Path="TrackAlbum"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Год: {0}">
+                            <MultiBinding.Bindings>
+                                <Binding Path="TrackYear"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Row="2" Grid.ColumnSpan="2" Background="Gray" Height="30" LastChildFill="True">
+            <Button Command="{Binding PreviousButtonCommand}" Height="20" Width="20" Margin="5 0 0 0" ToolTip="Предыдущий трек">
+                <Image Source="/Resources/Images/Previous.png"/>
+            </Button>
+            <Button Command="{Binding PauseButtonCommand}" Height="20" Width="20" Margin="5 0 0 0" ToolTip="Пауза">
+                <Image Source="/Resources/Images/Pause.png"/>
+            </Button>
+            <Button Command="{Binding PlayButtonCommand}" Height="20" Width="20" Margin="5 0 0 0" ToolTip="Воспроизвести">
+                <Image Source="/Resources/Images/Play.png"/>
+            </Button>
+            <Button Command="{Binding NextButtonCommand}" Height="20" Width="20" ToolTip="Следующий трек" Margin="5 0 0 0">
+                <Image Source="/Resources/Images/Next.png"/>
+            </Button>
+            <Button Command="{Binding RepeatButtonCommand}" Height="20" Width="20" ToolTip="Повторять трек" Margin="5 0 0 0">
+                <Image Source="/Resources/Images/Repeat.png"/>
+            </Button>
+            <MediaElement Width="0" Height="0" ScrubbingEnabled="True" LoadedBehavior="Manual">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Loaded">
+                        <b:InvokeCommandAction Command="{Binding MediaElementLoadedCommand}" PassEventArgsToCommand="True"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </MediaElement>
+            <TextBlock HorizontalAlignment="Right" Margin="10 7 0 0" Text="{Binding Position}"/>
+            <Slider HorizontalContentAlignment="Stretch" Orientation="Horizontal" Margin="5 7 5 0" IsSelectionRangeEnabled="True" SelectionStart="0" Focusable="False">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="Loaded">
+                        <b:InvokeCommandAction Command="{Binding SliderLoadedCommand}" PassEventArgsToCommand="True"/>
+                    </b:EventTrigger>
+                    <b:EventTrigger EventName="ValueChanged">
+                        <b:InvokeCommandAction Command="{Binding SliderValueChangedCommand}" PassEventArgsToCommand="True"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Slider>
+        </DockPanel>
+        <DockPanel LastChildFill="False" Grid.Row="3" Grid.ColumnSpan="2">
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>
+                    <StatusBarItem.Content>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}Сейчас играет: {0}; Плейлист: {1};">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="TrackDisplayName"/>
+                                        <Binding Path="PlaylistDisplayName"/>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StatusBarItem.Content>
+                </StatusBarItem>
+                <StatusBarItem Content="{Binding FileName}" HorizontalAlignment="Right">
+                    <StatusBarItem.ContentTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <Image Source="/Resources/Images/Open.png" Width="16" Height="16"/>
+                                <TextBlock Margin="5 0 0 0" Text="{Binding }"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </StatusBarItem.ContentTemplate>
+                </StatusBarItem>
+            </StatusBar>
+        </DockPanel>
+    </Grid>
+</Window>
